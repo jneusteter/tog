@@ -1,20 +1,16 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'pathname'
+require 'bundler'
+Bundler.require(:default)
+
+require_all 'lib'
 
 $togpath = File.dirname(Pathname.new(__FILE__).realpath)
 $debuglevel = 0
 load($togpath + '/debuglevel.rb') if File.exist?($togpath + '/debuglevel.rb')
 
 require 'pry' if $debuglevel > 0
-
-# Load method libraries
-load ($togpath + '/lib/ui.rb')
-load ($togpath + '/lib/files.rb')
-load ($togpath + '/lib/mods.rb')
-load ($togpath + '/lib/sets.rb')
 
 if File.exist?(togpath('!tog/runningtests'))
   $settings_path = 'testsettings/'
