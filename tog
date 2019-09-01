@@ -4,12 +4,12 @@
 require 'bundler'
 Bundler.require(:default)
 
-require_all 'lib'
+require_all 'lib', 'config.rb'
 
 $togpath = File.dirname(Pathname.new(__FILE__).realpath)
 load($togpath + '/debuglevel.rb') if File.exist?($togpath + '/debuglevel.rb')
 
-require 'pry' if configatron.debuglevel > 0
+require 'pry' if configatron.debuglevel.positive?
 
 if File.exist?(togpath('!tog/runningtests'))
   $settings_path = 'testsettings/'
