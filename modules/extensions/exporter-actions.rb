@@ -1,3 +1,3 @@
-if $menu_select == 'export'
-	doexport
-end
+# frozen_string_literal: true
+
+doexport if $menu_select == 'export'

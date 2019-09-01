@@ -1,10 +1,12 @@
-# Where are your shoots on your drive.  
-# TOG will not put actual files here.. it will create a directories for every shoot 
+# frozen_string_literal: true
+
+# Where are your shoots on your drive.
+# TOG will not put actual files here.. it will create a directories for every shoot
 $shoots = Dir.home + '/shoots/'
 $quicklink = Dir.home + '/current'
 
 # Do you want TOG to add, e.g. 2020-05-05 to any shoot directory it creates for you
-$add_date_to_shoot_directories = "yes"
+$add_date_to_shoot_directories = 'yes'
 
 # In a shoot directory, where will the FINAL images be kept.  This is a special location
 # as many other modules want to know about your final images.
@@ -20,19 +22,23 @@ $discards_directory = 'discards'
 $during_post_actions_overwrite_if_file_already_exists = 'no'
 
 def post1
-	move_pics_to_next
+  move_pics_to_next
 end
+
 def post2
-	move_pics_to_next
+  move_pics_to_next
 end
+
 def post3
-	move_pics_to_next
+  move_pics_to_next
 end
+
 def post4
-	move_pics_to_next
+  move_pics_to_next
 end
+
 def post5
-	move_pics_to_next
+  move_pics_to_next
 end
 
 # What other directories do you want auto created to keep your workflow clean and tidy.
@@ -48,12 +54,11 @@ end
 #  -- working on them in gimp and then moving the final pics to the final pic directory
 #
 # Want any other auto-created directories?  Add them here devided by commas.
-# It's ok to create directories and subdirectores,  
+# It's ok to create directories and subdirectores,
 # e.g. "discards, discards/pics, discards/other "
-$other_shoot_directories = ""
+$other_shoot_directories = ''
 
-
-###################################################################################################################33
+# ##################################################################################################################33
 # Don't touch unless you know what you're doing
 # The file that TOG uses to remember what set you are working on.
 $current_set_file = Dir.home + '/.tog.txt'

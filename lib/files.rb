@@ -1,51 +1,45 @@
+# frozen_string_literal: true
+
 # Make any path absolute
-def togpath path 
-  return path.gsub('!tog',$togpath)
+def togpath(path)
+  path.gsub('!tog', $togpath)
 end
 
-def dirslash path
-  if path[-1] != '/'
-    path = path + '/'
-  end
-  return path
+def dirslash(path)
+  path += '/' if path[-1] != '/'
+  path
 end
 
-def choose_files dir, filter="all"
-  if filter.nil?
-    filter = 'all'
-  end
+def choose_files(dir, filter = 'all')
+  filter = 'all' if filter.nil?
   pics = Dir.glob(dirslash(dir) + '*.jpg')
   matching = []
-  if filter == 'all' 
+  if filter == 'all'
     matching = pics
   else
     if filter
       pics.each do |pic|
-        if pic.include?(filter)
-          matching << pic
-        end
+        matching << pic if pic.include?(filter)
       end
     end
   end
-  return matching
+  matching
 end
 
-def pathify relpath, mod, postfix=''
-  return togpath('!tog/' + relpath + mod + postfix + '.rb') 
+def pathify(relpath, mod, postfix = '')
+  togpath('!tog/' + relpath + mod + postfix + '.rb')
 end
 
-def full_path relpath
-  if $current_set
-    return $current_set + relpath
-  end    
+def full_path(relpath)
+  return $current_set + relpath if $current_set
 end
 
 def final_files
-  return Dir.glob($current_set + dirslash($final_image_directory) + '/*.jpg')
+  Dir.glob($current_set + dirslash($final_image_directory) + '/*.jpg')
 end
 
-def chkmk dir
-  unless Dir.exists?(dir)
+def chkmk(dir)
+  unless Dir.exist?(dir)
     togprint('line', 'CREATING :: ' + dir)
     FileUtils.mkdir_p(dir)
   end
@@ -63,11 +57,11 @@ def sanitize_filename(filename)
   # sequence of characters with an underscore
   fn.map! { |s| s.gsub /[^a-z0-9\-]+/i, '_' }
   # Finally, join the parts with a period and return the res ult
-  return fn.join '.'
+  fn.join '.'
 end
 
-def filename full_path
-  return full_path.split('/').last
+def filename(full_path)
+  full_path.split('/').last
 end
 
 def ln_current_set
@@ -77,7 +71,5 @@ end
 
 # Remove symbolic link
 def ln_remove
-  if File.symlink?($quicklink)
-    FileUtils.rm $quicklink
-  end
+  FileUtils.rm $quicklink if File.symlink?($quicklink)
 end

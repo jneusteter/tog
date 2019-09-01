@@ -1,11 +1,13 @@
 #! /usr/bin/env ruby
-#Cleanup
-system("clear")
-system("touch runningtests")
-system("rm -r testsettings")
-system("mkdir testsettings")
-system("rm -r ~/shoots/*togtests")
-system("rm ~/.tog.txt")
+# frozen_string_literal: true
+
+# Cleanup
+system('clear')
+system('touch runningtests')
+system('rm -r testsettings')
+system('mkdir testsettings')
+system('rm -r ~/shoots/*togtests')
+system('rm ~/.tog.txt')
 
 # Setup togtests to use tog libraries
 require 'fileutils'
@@ -23,7 +25,6 @@ load ($togpath + '/lib/mods.rb')
 load ($togpath + '/lib/sets.rb')
 load ($togpath + '/lib/tests.rb')
 
-
 # Setup global vars
 $global_menu = []
 $set_menu = []
@@ -32,67 +33,60 @@ $set_roots = []
 $post_final_tasks = []
 $set_catchall_settings = {}
 
+# Make sure tog loads core modules
+system('./tog skipthrough')
+exittests("INITIALIZE :: Core didn't install") unless is_installed('core')
 
-#Make sure tog loads core modules
-system("./tog skipthrough")
-if ! is_installed('core')
-	exittests("INITIALIZE :: Core didn't install")
+# Install a module through tog install
+system('./tog install archiver')
+unless is_installed('archiver')
+  exittests("tog install archiver :: Archiver didn't install")
 end
 
-#Install a module through tog install
-system("./tog install archiver")
-if ! is_installed('archiver')
-	exittests("tog install archiver :: Archiver didn't install")
-end
-
-#UnInstall a module through tog install
-system("./tog uninstall archiver")
+# UnInstall a module through tog install
+system('./tog uninstall archiver')
 if is_installed('archiver')
-	exittests("tog uninstall archiver :: Archiver didn't uninstall")
+  exittests("tog uninstall archiver :: Archiver didn't uninstall")
 end
 
-#Now we can install all modules through the code
-#Including BETA
-#Including CUSTOM
+# Now we can install all modules through the code
+# Including BETA
+# Including CUSTOM
 test_install_notinstalledmods
 
-#Create a new set
-system("tog create togtests")
-$current_set_file = ENV['HOME'] + "/.tog.txt"
-test_exists "file", $current_set_file
-
+# Create a new set
+system('tog create togtests')
+$current_set_file = ENV['HOME'] + '/.tog.txt'
+test_exists 'file', $current_set_file
 
 # Get the current tog environment setup right here
 load_mod_settings
 load_current_set
 
-#Test Post Processing steps
-system("cp tog.jpg " + $current_set + $workflow1_directory)
+# Test Post Processing steps
+system('cp tog.jpg ' + $current_set + $workflow1_directory)
 
-#Run Post1
-system("tog post1")
+# Run Post1
+system('tog post1')
 
-#Check for tog in finals
-test_exists "file", $current_set + $final_image_directory + '/tog.jpg'
-test_exists "file", $current_set + 'resized/tog.jpg'
-test_exists "file", $current_set + 'instagramed/IG-tog.jpg'
+# Check for tog in finals
+test_exists 'file', $current_set + $final_image_directory + '/tog.jpg'
+test_exists 'file', $current_set + 'resized/tog.jpg'
+test_exists 'file', $current_set + 'instagramed/IG-tog.jpg'
 
+# Run some more modules that are testable
+system('tog declutter')
+test_notexists 'file', $current_set + 'resized/tog.jpg'
+test_notexists 'file', $current_set + 'instagramed/IG-tog.jpg'
 
-#Run some more modules that are testable
-system("tog declutter")
-test_notexists "file", $current_set + 'resized/tog.jpg'
-test_notexists "file", $current_set + 'instagramed/IG-tog.jpg'
+# Cleanup
+puts 'Cleaning up from tests'
+system('rm runningtests')
+system('rm -r testsettings')
+system('rm -r ~/shoots/*togtests')
+system('rm ~/.tog.txt')
 
-
-
-#Cleanup
-puts "Cleaning up from tests"
-system("rm runningtests")
-system("rm -r testsettings")
-system("rm -r ~/shoots/*togtests")
-system("rm ~/.tog.txt")
-
-puts "=================================================================================="
-puts "=================================================================================="
-puts "=================================================================================="
-puts "If you got here.. things look good"
+puts '=================================================================================='
+puts '=================================================================================='
+puts '=================================================================================='
+puts 'If you got here.. things look good'

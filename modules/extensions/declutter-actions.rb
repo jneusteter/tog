@@ -1,4 +1,3 @@
-if $menu_select == 'declutter'
-	dodeclutter
+# frozen_string_literal: true
 
-end
+dodeclutter if $menu_select == 'declutter'
