@@ -12,7 +12,7 @@ def qdebug(contents)
 end
 
 def debug(loglevel = 1, contents)
-  puts '::::' + contents.to_s + ' ::::' if loglevel <= $debuglevel
+  puts '::::' + contents.to_s + ' ::::' if loglevel <= configatron.debuglevel
 end
 
 def togprint(style, contents)
@@ -45,7 +45,7 @@ def togprint(style, contents)
 end
 
 def clear_screen
-  if $debuglevel > 0
+  if configatron.debuglevel > 0
     puts
     puts
     puts

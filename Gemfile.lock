@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.0)
+    configatron (4.5.1)
     jaro_winkler (1.5.3)
     parallel (1.17.0)
     parser (2.6.4.0)
@@ -22,6 +23,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  configatron (~> 4.5, >= 4.5.1)
   require_all (~> 2.0)
   rubocop (~> 0.74.0)
 
